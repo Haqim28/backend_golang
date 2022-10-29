@@ -22,8 +22,8 @@ func RepositoryUser(db *gorm.DB) *repository {
 
 func (r *repository) FindUsers() ([]models.User, error) {
 	var users []models.User
-	err := r.db.Find(&users).Error
-	//err := r.db.Preload("User").Preload("Products").Find(&users).Error // add this code
+	//err := r.db.Find(&users).Error
+	err := r.db.Preload("Product").Find(&users).Error // add this code
 	return users, err
 }
 
@@ -38,7 +38,7 @@ func (r *repository) GetUser(ID int) (models.User, error) {
 func (r *repository) GetRole(Role string) ([]models.User, error) {
 	var users []models.User
 
-	err := r.db.Where("role = ?", Role).Find(&users).Error
+	err := r.db.Where("role = ?", Role).Preload("Product").Find(&users).Error
 
 	return users, err
 }

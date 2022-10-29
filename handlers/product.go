@@ -92,13 +92,14 @@ func (h *handlerProduct) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	filename := dataUpload.(string)             // add this code
 
 	price, _ := strconv.Atoi(r.FormValue("price"))
-	qty, _ := strconv.Atoi(r.FormValue("qty"))
+	// qty, _ := strconv.Atoi(r.FormValue("qty"))
 	//user_id, _ := strconv.Atoi(r.FormValue("user_id"))
 	request := productdto.ProductRequest{
-		Name:  r.FormValue("name"),
-		Desc:  r.FormValue("desc"),
+		Title: r.FormValue("title"),
+		//Desc:   r.FormValue("desc"),
 		Price: price,
-		Qty:   qty,
+		//Qty:    qty,
+		UserID: userId,
 	}
 
 	validation := validator.New()
@@ -111,11 +112,11 @@ func (h *handlerProduct) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	product := models.Product{
-		Name:   request.Name,
-		Desc:   request.Desc,
-		Price:  request.Price,
-		Image:  filename,
-		Qty:    request.Qty,
+		Title: request.Title,
+		// Desc:   request.Desc,
+		Price: request.Price,
+		Image: filename,
+		// Qty:    request.Qty,
 		UserID: userId,
 	}
 
@@ -142,14 +143,14 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	filename := dataUpload.(string)             // add this code
 
 	price, _ := strconv.Atoi(r.FormValue("price"))
-	qty, _ := strconv.Atoi(r.FormValue("qty"))
+	//qty, _ := strconv.Atoi(r.FormValue("qty"))
 	user_id, _ := strconv.Atoi(r.FormValue("user_id"))
 
 	request := productdto.UpdateProductRequest{
-		Name:   r.FormValue("name"),
-		Desc:   r.FormValue("desc"),
-		Price:  price,
-		Qty:    qty,
+		Title: r.FormValue("title"),
+		//Desc:   r.FormValue("desc"),
+		Price: price,
+		//Qty:    qty,
 		Image:  filename,
 		UserID: user_id,
 	}
@@ -168,22 +169,22 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Print("product id", product.UserID)
 
-	if request.Name != "" {
-		product.Name = request.Name
+	if request.Title != "" {
+		product.Title = request.Title
 
 	}
 
-	if request.Desc != "" {
-		product.Desc = request.Desc
-	}
+	// if request.Desc != "" {
+	// 	product.Desc = request.Desc
+	// }
 
 	if request.Image != "" {
 		product.Image = request.Image
 	}
 
-	if request.Qty != 0 {
-		product.Qty = request.Qty
-	}
+	// if request.Qty != 0 {
+	// 	product.Qty = request.Qty
+	// }
 
 	if request.Price != 0 {
 		product.Price = request.Price
@@ -233,11 +234,11 @@ func (h *handlerProduct) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 
 func convertResponseProduct(u models.Product) models.ProductResponse {
 	return models.ProductResponse{
-		Name:  u.Name,
-		Desc:  u.Desc,
+		Title: u.Title,
+		// Desc:  u.Desc,
 		Price: u.Price,
 		Image: u.Image,
-		Qty:   u.Qty,
-		User:  u.User,
+		// Qty:   u.Qty,
+		User: u.User,
 	}
 }
